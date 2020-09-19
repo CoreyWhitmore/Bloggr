@@ -16,7 +16,11 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">Create Post!</button>
+            <div v-if="this.newBlog.title && this.newBlog.body">
+                <router-link :to="{name:'Home'}">
+                    <button type="submit" class="btn btn-success">Create Post!</button>
+                </router-link>
+            </div>
         </form>
     </div>
 </template>

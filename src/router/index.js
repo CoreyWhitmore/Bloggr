@@ -34,6 +34,7 @@ const routes = [
     path: "/blog/:id",
     name: "Blog",
     component: Blog,
+    beforeEnter: authGuard,
   },
 ];
 

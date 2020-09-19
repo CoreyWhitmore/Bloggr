@@ -10,7 +10,9 @@ export default new Vuex.Store({
     profile: {},
     blogs: [],
     comments: [],
-    activeBlog: {}
+    activeBlog: {
+      creator: { name: "" }//prevents error when loading first blog of session
+    },
   },
   mutations: {
     setProfile(state, profile) {
@@ -21,6 +23,14 @@ export default new Vuex.Store({
     },
     setActiveBlog(state, blog) {
       state.activeBlog = blog
+    },
+    setComments(state, comments) {
+      state.comments = comments
+    },
+    addComment(state, comment) {
+      console.log("index.addComment");
+      state.comments = [...state.comments, comment]
+      console.log(state.comments);
     }
   },
   actions: {
@@ -40,7 +50,7 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async createBlog({ commit, dispatch }, blog) {
+    async createBlog({ commit }, blog) {
       try {
         let res = await api.post("blogs", blog)
         commit("setActiveBlog", res.data)
@@ -48,5 +58,30 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
+    async makeActiveBlog({ commit }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        commit("setActiveBlog", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async createComment({ commit }, comment) {
+      try {
+        console.log("index.createComment");
+        let res = await api.post("comments", comment)
+        commit("addComment", comment)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getComments({ commit, dispatch }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId + "/comments")
+        commit("setComments", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   },
 });
