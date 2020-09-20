@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div v-if="this.post.title && this.post.body">
-                    <button @click="toggleEdit" type="submit" class="btn btn-success">Save</button>
+                    <button @click="editBlog" type="submit" class="btn btn-success">Save</button>
                     <button @click="cancelEdit" class="btn btn-danger">Cancel</button>
                 </div>
             </form>
@@ -64,7 +64,6 @@
             this.$store.dispatch("makeActiveBlog", this.$route.params.id);
             this.$store.dispatch("getComments", this.$route.params.id)
             this.$store.dispatch("getProfile")
-            console.log(this.$store.state.profile);
         },
         data() {
             return {
@@ -73,6 +72,7 @@
                     body: null,
                     blog: this.$route.params.id,
                     creatorEmail: this.$store.state.profile.email,
+                    blogId: this.$store.state.activeBlog.id
                 }
             };
         },
@@ -123,6 +123,7 @@
             },
             editBlog() {
                 this.$store.dispatch("editBlog", this.blog)
+                this.toggleEdit()
             },
             deleteBlog() {
                 this.$store.dispatch("deleteBlog", this.blog.id)
