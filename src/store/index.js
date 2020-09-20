@@ -30,7 +30,10 @@ export default new Vuex.Store({
     addComment(state, comment) {
       console.log("index.addComment");
       state.comments = [...state.comments, comment]
-      console.log(state.comments);
+    },
+    deleteBlog(state, blogId) {
+      state.activeBlog = null
+      state.blogs.filter(blog => blog.id != blogId)
     }
   },
   actions: {
@@ -66,11 +69,10 @@ export default new Vuex.Store({
         console.error(error)
       }
     },
-    async createComment({ commit }, comment) {
+    async createComment({ commit, dispatch }, comment) {
       try {
-        console.log("index.createComment");
         let res = await api.post("comments", comment)
-        commit("addComment", comment)
+        dispatch('getComments',)
       } catch (error) {
         console.error(error)
       }
@@ -79,6 +81,21 @@ export default new Vuex.Store({
       try {
         let res = await api.get("blogs/" + blogId + "/comments")
         commit("setComments", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editBlog({ commit, dispatch }, blog) {
+      try {
+        let res = await api.put("blogs/" + blog.id, blog)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteBlog({ commit, dispatch }, blogId) {
+      try {
+        await api.delete("blogs/" + blogId)
+        commit("deleteBlog", blogId)
       } catch (error) {
         console.error(error)
       }

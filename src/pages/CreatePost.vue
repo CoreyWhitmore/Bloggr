@@ -17,9 +17,10 @@
                 </div>
             </div>
             <div v-if="this.newBlog.title && this.newBlog.body">
-                <router-link :to="{name:'Home'}">
-                    <button type="submit" class="btn btn-success">Create Post!</button>
-                </router-link>
+                <!-- NOTE this router link originally worked, but now prevents the blog post from being created -->
+                <!-- <router-link :to="{name:'Home'}"> -->
+                <button type="submit" class="btn btn-success">Create Blog!</button>
+                <!-- </router-link> -->
             </div>
         </form>
     </div>
@@ -36,6 +37,9 @@
 <script>
     export default {
         name: "create-blog",
+        mounted() {
+            this.$store.dispatch("getProfile")
+        },
         data() {
             return {
                 newBlog: {
@@ -45,6 +49,7 @@
         },
         methods: {
             createBlog() {
+                console.log('Creating Post');
                 if (this.newBlog.title && this.newBlog.body) {
                     this.$store.dispatch("createBlog", this.newBlog);
                 }

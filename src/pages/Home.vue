@@ -16,7 +16,11 @@
   export default {
     name: "home",
     mounted() {
+      this.$store.dispatch("getProfile")
+    },
+    mounted() {
       this.$store.dispatch("getAllBlogs")
+      this.$store.dispatch("getProfile")
     },
     computed: {
       blogs() {

@@ -7,18 +7,21 @@
 </template>
 
 <script>
-export default {
-  name: "Profile",
-  computed: {
-    profile() {
-      return this.$store.state.profile;
+  export default {
+    name: "Profile",
+    mounted() {
+      this.$store.dispatch("getProfile")
+    },
+    computed: {
+      profile() {
+        return this.$store.state.profile;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
-}
+  img {
+    max-width: 100px;
+  }
 </style>
