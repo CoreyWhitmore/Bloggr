@@ -13,7 +13,7 @@
                     <p>(_<i class="fas fa-pencil-alt" @click="toggleEdit"></i></p>
                     <p>) (</p>
                     <router-link :to="{name:'Home'}">
-                        <p><i class="fa fa-trash" aria-hidden="true" @click="deleteBlog"></i>)</p>
+                        <p><i class="fa fa-trash text-dark" aria-hidden="true" @click="deleteBlog"></i>)</p>
                     </router-link>
                 </div>
             </div>
